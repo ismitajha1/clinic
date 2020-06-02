@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="container">
+		<div class="level">
+			<div class="level-left">
+				<h5 class="title is-5">Department</h5>
+			</div>
+			<div class="level-right">
+				<button class="button is-small is-success" (click)="onAddBtnClick()">Add</button>
+			</div>
+		</div>
+
+		<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+			<tr>
+				<th>Department Name</th>
+				<th>Action</th>
+			</tr>
+			<tr *ngFor="let item of departments">
+				<td>{{item.depName}}</td> 
+				<td>
+					<div class="buttons">
+						<button class="button is-small is-link" (click)="onEditBtnClick(item)">Edit</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+<div class="modal" [ngClass]="{'is-active': formModalActive}">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+
+        <form class="box" [formGroup]="departmentFormGroup">
+            <div class="field">
+                <label class="label is-small">Department Name</label>
+                <div class="control">
+                    <input class="input is-small" type="text" placeholder="Name"
+                        [formControlName]="departmentFormControlKeys.depName" />
+                </div>
+            </div>
+
+            <div class="field is-grouped">
+                <div class="control">
+                    <button type="button" class="button is-small is-link" (click)="onFormSubmitBtnClick()">
+                        Submit
+                    </button>
+                </div>
+                <div class="control">
+                    <button type="button" class="button is-small is-link is-light" (click)="onFormCancelBtnClick()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+

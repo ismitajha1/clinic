@@ -1,0 +1,185 @@
+<div class="container">
+    <div class="container">
+        <div class="card-body card card-outline-secondary" *ngIf="showContainer" style="opacity: 0.9;">
+            <div class="card-body card card-outline-secondary" *ngIf="showContainer">
+                <div class="level">
+                    <div class="level-left">
+                        <h5 class="title is-3 has-white-color">doctor Detail</h5>
+                    </div>
+                    <div class="level-right">
+                        <button class="button is-small is-success" (click)="onAddBtnClick()"
+                            *ngIf="tableActive">Add</button>
+                    </div>
+                </div>
+                <div class="field" *ngIf="tableActive">
+                    <app-input></app-input>
+                </div>
+
+                <table class="table is-bordered is-striped is-narrow is-hoverable " *ngIf="tableActive">
+                    <thead>
+                        <th>Doctor Name</th>
+                        <th>Departments</th>
+                        <th>NMC number</th>
+                        <th colspan="2" class="has-text-centered">Action</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let doc of doctors">
+                            <td>{{doc.doctorname}}</td>
+                            <td>{{doc.departmentname}}</td>
+                            <td>{{doc.nmcNo}}</td>
+                            <td><button class="button is-small is-link"
+                                    (click)="onEditBtnClick(doc.doctorid)">Edit</button></td>
+                            <td><button class="button is-small is-danger"
+                                    (click)="onDeleteBtnClick(doc.doctorid)">Delete</button></td>
+                           </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column is-one-fifth"></div>
+        <div *ngIf="addFormModalActive" class="column is-three-fifths">
+            <form class="box" [formGroup]="doctorFormGroup">
+                <div class="field">
+                    <label class="label is-small">Name</label>
+                    <div class="control">
+                        <input class="input is-small" type="text" placeholder="Name"
+                            [formControlName]="doctorFormControlKeys.dName" />
+                        <small class="text-danger"
+                            *ngIf="!doctorFormGroup.get('dName').valid && !doctorFormGroup.get('dName').pristine">
+                            *Name cannot contain numbers.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label is-small">NMC number</label>
+                    <div class="control">
+                        <input class="input is-small" type="text" placeholder="nmc number"
+                            [formControlName]="doctorFormControlKeys.nmcNo" />
+                        <small class="text-danger"
+                            *ngIf="!doctorFormGroup.get('nmcNo').valid && !doctorFormGroup.get('nmcNo').pristine">
+                            *number should be of 4 digits.
+                        </small>
+                    </div>
+                </div>
+                <div class="field">
+                    <div formArrayName="items"
+                        *ngFor="let item of doctorFormGroup.get('items').value; let i = index;">
+                        <div [formGroupName]="i" class="columns">
+                            <div class="column is-three-fifths">
+                                <select class="input is-small" [formControlName]="'id'">
+                                    <option value="">Select Department</option>
+                                    <option *ngFor="let dept of departmentlist" [value]="dept.id">
+                                        {{dept.depName}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="column is-one-fifth">
+                                <button type="button" class="button is-small is-danger"
+                                    (click)="removeDepartment(i)">Remove</button>
+                            </div>
+                            <div class="column is-one-fifth">
+                                <button type="button" class="button is-small is-success" (click)="addNewDepartment()">Add
+                                    New
+                                    Department</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <button type="button" class="button is-small is-primary" (click)="addDepartments()">
+                        Add<span class="icon"><i class="fas fa-info-circle"></i></span>
+                    </button>
+                </div>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button type="button" [disabled]="!doctorFormGroup.valid" class="button is-small is-link"
+                            (click)="onFormSubmitBtnClick()">
+                            Submit
+                        </button>
+                    </div>
+                    <div class="control">
+                        <button type="button" class="button is-small is-link is-light" (click)="onFormCancelBtnClick()">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="column is-one-fifth"></div>
+    </div>
+
+    <div class="modal" [ngClass]="{'is-active': newDepartmentFormModalActive}">
+        <div class="modal-background"></div>
+        <div class="modal-content has-background-white">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Department</p>
+                <button class="delete" aria-label="close" (click)="onNewDepartmentFormCancel()"></button>
+            </header>
+            <br />
+            <section>
+                <app-department></app-department>
+            </section>
+            <br />
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column is-one-fifth"></div>
+        <div *ngIf="formModalActive" class="column is-three-fifths">
+            <form class="box" [formGroup]="doctorFormGroup">
+                <div class="field">
+                    <label class="label is-small">Name</label>
+                    <div class="control">
+                        <input class="input is-small" type="text" placeholder="Name"
+                            [formControlName]="doctorFormControlKeys.dName" />
+                        <small class="text-danger"
+                            *ngIf="!doctorFormGroup.get('dName').valid && !doctorFormGroup.get('dName').pristine">
+                            *Name cannot contain numbers.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label is-small">NMC Number</label>
+                    <div class="control">
+                        <input class="input is-small" type="text" placeholder="nmc number"
+                            [formControlName]="doctorFormControlKeys.nmcNo" />
+                        <small class="text-danger"
+                            *ngIf="!doctorFormGroup.get('nmcNo').valid && !doctorFormGroup.get('nmcNo').pristine">
+                            *number should be of 4 digits.
+                        </small>
+                    </div>
+                </div>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button type="button" [disabled]="!doctorFormGroup.valid" class="button is-small is-link" (click)="onFormSubmitBtnClick()">
+                            Submit
+                        </button>
+                    </div>
+                    <div class="control">
+                        <button type="button" class="button is-small is-link is-light" (click)="onFormCancelBtnClick()">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="column is-one-fifth"></div>
+    </div>
+
+    <div class="modal" [ngClass]="{'is-active': deleteModalActive}">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="box">
+                <h5 class="title is-5">Are you sure to delete</h5>
+                <div class="buttons">
+                    <button type="button" class="button is-small is-link" (click)="onDeleteConfirm()">Yes</button>
+                    <button type="button" class="button is-small is-link is-light"
+                        (click)="onDeleteReject()">No</button>
+                </div>
+            </div>
+        </div>
+    </div>

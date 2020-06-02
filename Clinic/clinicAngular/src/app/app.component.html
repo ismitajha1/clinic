@@ -1,0 +1,33 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <h3 class="navbar-item title" style="margin-bottom: 0;">LOGO</h3>
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+      data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start"  *ngIf="logger()">
+      <a class="navbar-item" routerLink="/dashboard" routerLinkActive="is-active">Dashboard</a>
+      <a class="navbar-item" routerLink="/user/patient" routerLinkActive="is-active">Patient</a>
+      <a class="navbar-item" routerLink="/user/nurse" routerLinkActive="is-active">Nurse</a>
+      <a class="navbar-item" routerLink="/user/department" routerLinkActive="is-active">Department</a>
+      <a class="navbar-item" routerLink="/user/doctor" routerLinkActive="is-active">Doctor</a>
+       <button class="btn btn-primary" (click)="logout()">Logout</button>
+    </div>
+  <div class="navbar-start" *ngIf="!logger()">
+    <a class="navbar-item" [hidden]="hideLogin" routerLink="/auth/login">Login</a>
+    <a class="navbar-item" routerLink='/dashboard/'>Dashboard</a>
+  </div>
+</div>
+</nav>
+
+<div class="has-background-dark" style="height: 2px;"></div>
+<div style="height: 10px;"></div>
+
+<div class="container is-fluid">
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,29 @@
+<div class="container lock">
+    <form class="form-group" [formGroup]="userFormGroup" (ngSubmit)="login()">
+        <div class="field">
+            <label class="label">Username</label>
+            <p class="help is-danger" *ngIf="!userFormGroup.get('username').valid">
+                invalid username
+            </p>
+            <div class="control">
+                <input class="form-control" type="text" name="username" placeholder="Username" [formControlName]="'username'">
+            </div>
+        </div>
+        <br>
+        <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+                <input class="form-control" type="password" name="password" placeholder="password" [formControlName]="'password'">
+            </div>
+        </div>
+        <br>
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="btn btn-primary" type="submit" [disabled]="!userFormGroup.valid">Submit</button>
+            </div>
+            <div class="control">
+                <button class="btn btn-danger"  routerLink="/dashboard">Cancel</button>
+            </div>
+         </div>
+</form>
+</div>

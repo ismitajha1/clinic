@@ -1,0 +1,59 @@
+<div [hidden] = "hideForm" class="container lock">
+    <form class="form-group" [formGroup]="admitPatientFormGroup" (ngSubmit)="admit()">
+        <div class="field">
+            <label class="label">Symptoms</label>
+            <div class="control">
+                <input class="form-control" type="text" name="symptoms" placeholder="Symptoms"
+                    [formControlName]="'symptoms'">
+            </div>
+        </div>
+        <br>
+        <div class="field">
+            <label class="label">Department</label>
+            <select class="form-control" placeholder="select" [formControlName]="'depOption'"
+                (change)="loadDepartment()">
+                <option>------select department-------</option>
+                <option *ngFor="let element of department">{{element.depName}}</option>
+            </select>
+        </div>
+        <br>
+
+        <div *ngFor="let element of depOptions" >
+            <div class="card" style="width: 200px; height: 100px; background-color:darkgrey;" >
+                <p class="card-title">{{element}} department</p>
+                <select class="form-control" [formControlName]="'docOption'" (change)="loadDoctor(element)"> 
+                    <option>select doctor</option>
+                    <option *ngFor="let unit of doctor">{{unit.dName}}</option>
+                </select>
+                <span class="btn btn-primary" (click)="emitDoctor(element)">Load</span>
+            </div>
+            <br>
+        </div>
+
+        <div *ngFor="let element of doctorBuffer">
+            <p>{{element}}</p>
+        </div>
+        
+        <br>
+
+        <div class="field">
+            <label class="label">Nurse</label>
+            <select class="form-control" placeholder="select" [formControlName]="'nurseOption'"
+                (change)="loadNurse()">
+                <option>------select Nurse-------</option>
+                <option *ngFor="let element of nurse">{{element.nName}}</option>
+            </select>
+        </div>
+
+        <br>
+        <div *ngFor="let element of nurseOptions">
+            <p>{{element}}</p>
+        </div>
+
+        <br>
+
+        <button class="btn btn-success" type="submit" [disabled]="!admitPatientFormGroup.valid">Admit</button>
+
+    </form>
+    <span class="btn btn-danger" routerLink="/patient">Cancel</span>
+</div>

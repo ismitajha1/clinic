@@ -1,0 +1,39 @@
+<div class="level">
+    <div class="level-left">
+        <h5 class="title is-5">Patient Details</h5>
+    </div>
+    <div class="level-right">
+      <span class="button is-small is-success" routerLink="/patient">Patient List</span>
+ </div>
+</div> 
+
+<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+    <tr>
+        <th>Registered At</th>
+        <th>Symptoms</th>
+        <th>Departments</th>
+        <th>Doctors</th>
+        <th>Nurses</th>
+    </tr>
+    <tr *ngFor="let item of admits">
+        <td>{{item.registeredAt}}</td> 
+        <td>{{item.symptoms}}</td> 
+        <td>{{item.department.join(', ')}}</td>
+        <td>{{item.doctor.join(', ')}}</td>
+        <td>{{item.nurse.join(', ')}}</td>
+    </tr>
+</table>
+
+
+
+
+<!-- <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+    <tr>
+        <th>Registered At</th>
+        <th>Symptoms</th>
+    </tr>
+    <tr *ngFor="let item of admissions">
+        <td>{{item.registeredAt}}</td> 
+        <td>{{item.symptoms}}</td> 
+    </tr>
+</table>  -->

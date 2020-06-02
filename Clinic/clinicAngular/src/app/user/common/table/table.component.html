@@ -1,0 +1,15 @@
+<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+    <tr>
+        <th *ngFor="let column of columns">{{column.label}}</th>
+        <th>Action</th>
+    </tr>
+    <tr *ngFor="let item of data">
+        <td *ngFor="let column of columns">{{item[column.name]}}</td>
+        <td>
+            <div class="buttons">
+                <button class="button is-small is-link" (click)="editBtnClick.emit(item)">Edit</button>
+                <button class="button is-small is-danger" (click)="deleteBtnClick.emit(item)">Delete</button>
+            </div>
+        </td>
+    </tr>
+</table>
